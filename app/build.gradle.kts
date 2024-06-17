@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.base.android.application)
     alias(libs.plugins.base.android.application.compose)
+    alias(libs.plugins.base.android.hilt)
 }
 
 android {
@@ -26,6 +27,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.designsystem)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtimeCompose)

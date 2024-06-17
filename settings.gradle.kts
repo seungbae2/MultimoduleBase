@@ -21,4 +21,14 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "MultimoduleBase"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
+include(":core:data")
+include(":core:database")
+include(":core:datastore")
+include(":core:designsystem")
+include(":core:domain")
+include(":core:model")
+include(":core:network")
+include(":core:ui")
+include(":feature:disney")

@@ -1,4 +1,4 @@
-package com.sb.multimodulebase.ui.theme
+package com.sb.multimodulebase.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 

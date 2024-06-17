@@ -1,6 +1,5 @@
-package com.sb.multimodulebase.ui.theme
+package com.sb.multimodulebase.core.designsystem.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

@@ -23,8 +23,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply {
-                apply("maxwork.android.library")
-                apply("maxwork.android.androidHilt")
+                apply("base.android.library")
+                apply("base.android.androidHilt")
             }
 
             dependencies {
