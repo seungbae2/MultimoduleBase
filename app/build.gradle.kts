@@ -28,6 +28,7 @@ android {
 
 dependencies {
     implementation(projects.core.designsystem)
+    implementation(projects.feature.disney)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtimeCompose)
