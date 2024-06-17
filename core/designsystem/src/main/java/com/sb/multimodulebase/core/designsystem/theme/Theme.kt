@@ -121,7 +121,7 @@ fun MultimoduleBaseTheme(
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography = Typography,
+            typography = BaseTypography,
             content = content
         )
     }
