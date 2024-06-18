@@ -6,9 +6,15 @@ plugins {
 
 android {
     namespace = "com.sb.multimodule.core.network"
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
+    api(projects.core.common)
+    api(projects.core.model)
 
     implementation(libs.coil.kt)
     implementation(libs.coil.kt.svg)
