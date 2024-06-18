@@ -9,4 +9,14 @@ android {
 }
 
 dependencies {
+    api(projects.core.common)
+    api(projects.core.datastore)
+    api(projects.core.model)
+    api(projects.core.network)
+
+    implementation(libs.sandwich)
+    implementation(libs.kotlinx.serialization.json)
+
+    api(libs.androidx.paging.runtime)
+    api(libs.androidx.paging.compose)
 }

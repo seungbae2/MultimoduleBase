@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.sb.multimodulebase.core.designsystem.component.BaseTopAppBar
 import com.sb.multimodulebase.core.designsystem.icon.BaseIcons
-import com.sb.multimodulebase.navigation.BaseBackground
+import com.sb.multimodulebase.core.designsystem.component.BaseBackground
 import com.sb.multimodulebase.navigation.BaseNavHost
 
 @OptIn(ExperimentalMaterial3Api::class)

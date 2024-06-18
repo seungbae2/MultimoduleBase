@@ -1,4 +1,4 @@
-package com.sb.multimodulebase.navigation
+package com.sb.multimodulebase.core.designsystem.component
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.LocalAbsoluteTonalElevation
