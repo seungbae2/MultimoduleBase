@@ -4,5 +4,5 @@ import com.sb.multimodule.core.network.model.DisneyAllCharacterResponse
 import com.skydoves.sandwich.ApiResponse
 
 interface DisneyNetworkDataSource {
-    suspend fun getAllCharacters(): ApiResponse<DisneyAllCharacterResponse>
+    suspend fun getAllCharacters(page: Int, pageSize: Int, ): ApiResponse<DisneyAllCharacterResponse>
 }

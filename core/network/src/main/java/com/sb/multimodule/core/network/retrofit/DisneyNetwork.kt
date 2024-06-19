@@ -10,13 +10,17 @@ import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Singleton
 
 
 private interface DisneyNetworkApi {
     @GET("character")
-    suspend fun getAllCharacters() : ApiResponse<DisneyAllCharacterResponse>
+    suspend fun getAllCharacters(
+        @Query("page") page: Int,
+        @Query("pageSize") pageSize: Int,
+    ) : ApiResponse<DisneyAllCharacterResponse>
 }
 
 @Singleton
@@ -35,6 +39,6 @@ internal class DisneyNetwork @Inject constructor(
         .build()
         .create(DisneyNetworkApi::class.java)
 
-    override suspend fun getAllCharacters(): ApiResponse<DisneyAllCharacterResponse> =
-        networkApi.getAllCharacters()
+    override suspend fun getAllCharacters(page: Int, pageSize: Int): ApiResponse<DisneyAllCharacterResponse> =
+        networkApi.getAllCharacters(page, pageSize)
 }
