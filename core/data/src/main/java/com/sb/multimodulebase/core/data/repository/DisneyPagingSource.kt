@@ -12,7 +12,7 @@ import com.skydoves.sandwich.onError
 import com.skydoves.sandwich.onSuccess
 import okio.IOException
 
-class DisneyPagingSource(
+internal class DisneyPagingSource(
     private val disneyNetworkDataSource: DisneyNetworkDataSource
 ) : PagingSource<Int,DisneyCharacter>() {
     override fun getRefreshKey(state: PagingState<Int, DisneyCharacter>): Int? {
@@ -25,7 +25,7 @@ class DisneyPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisneyCharacter> {
         return try {
             val currentPage = params.key ?: 1
-            when (val response = disneyNetworkDataSource.getAllCharacters(currentPage, PAGE_SIZE)) {
+            when (val response = disneyNetworkDataSource.getAllCharacters(currentPage, params.loadSize)) {
                 is ApiResponse.Failure -> {
                     LoadResult.Error(Throwable(response.message()))
                 }
@@ -45,9 +45,5 @@ class DisneyPagingSource(
         } catch (exception: Exception) {
             return LoadResult.Error(exception)
         }
-    }
-
-    companion object {
-        private const val PAGE_SIZE = 50
     }
 }
