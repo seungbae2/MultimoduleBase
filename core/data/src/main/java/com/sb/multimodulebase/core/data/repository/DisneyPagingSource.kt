@@ -24,26 +24,28 @@ internal class DisneyPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DisneyCharacter> {
         return try {
-            val currentPage = params.key ?: 1
-            when (val response = disneyNetworkDataSource.getAllCharacters(currentPage, params.loadSize)) {
+            val currentPage = params.key ?: INIT_PAGE
+            when (val response = disneyNetworkDataSource.getAllCharacters(currentPage, PAGE_SIZE)) {
                 is ApiResponse.Failure -> {
                     LoadResult.Error(Throwable(response.message()))
                 }
                 is ApiResponse.Success -> {
                     val data = response.data.data.map { it.toExternalData() }
-                    val nextPageUrl = response.data.info.nextPage
-                    val nextPageKey = nextPageUrl.substringAfterLast("=").toIntOrNull()
-                    val prevPageKey = response.data.info.previousPage.substringAfterLast("=").toIntOrNull()
 
                     LoadResult.Page(
                         data = data,
-                        prevKey = prevPageKey,
-                        nextKey = nextPageKey,
+                        prevKey = (currentPage - 1).takeIf { it >= INIT_PAGE },
+                        nextKey = (currentPage + 1).takeIf { response.data.info.nextPage != null },
                     )
                 }
             }
         } catch (exception: Exception) {
             return LoadResult.Error(exception)
         }
+    }
+
+    companion object {
+        const val INIT_PAGE = 1
+        const val PAGE_SIZE = 50
     }
 }

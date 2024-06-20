@@ -15,7 +15,7 @@ data class DisneyCharacterResponse(
     val enemies: List<String>,
     val sourceUrl: String,
     val name: String,
-    val imageUrl: String,
+    val imageUrl: String? = null,
     val createdAt: Instant,
     val updatedAt: Instant,
     val url: String,

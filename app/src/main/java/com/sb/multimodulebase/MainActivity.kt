@@ -9,8 +9,10 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import com.sb.multimodulebase.core.designsystem.theme.MultimoduleBaseTheme
 import com.sb.multimodulebase.ui.MainScreen
 import com.sb.multimodulebase.ui.rememberAppState
+import dagger.hilt.android.AndroidEntryPoint
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

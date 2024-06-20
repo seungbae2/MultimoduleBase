@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class InfoResponse(
     val totalPages: Int,
     val count: Int,
-    val previousPage: String,
-    val nextPage: String,
+    val previousPage: String?,
+    val nextPage: String?,
 )

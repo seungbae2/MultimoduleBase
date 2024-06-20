@@ -9,7 +9,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface FlavoredNetworkModule {
+internal interface ApiModule {
     @Binds
     fun bindsDisneyNetworkDataSource(impl: DisneyNetwork): DisneyNetworkDataSource
 }
