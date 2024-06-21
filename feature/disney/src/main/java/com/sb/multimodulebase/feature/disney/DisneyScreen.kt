@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import coil.compose.AsyncImage
 import com.sb.multimodulebase.core.model.DisneyCharacter
 
 @Composable
@@ -24,7 +25,11 @@ internal fun DisneyScreen(
     LazyColumn {
         items(disneyCharacterPagingItems.itemCount) { index ->
             disneyCharacterPagingItems[index]?.let { character ->
-                Text(text = character.name)
+//                CharacterCard(character = character)
+                AsyncImage(
+                    model = character.imageUrl,
+                    contentDescription = null,
+                )
             }
         }
     }
