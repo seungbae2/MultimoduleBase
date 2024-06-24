@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -23,7 +24,7 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun okHttpCallFactory(): Call.Factory = trace("NiaOkHttpClient") {
+    fun okHttpCallFactory(): Call.Factory = trace("DisneyOkHttpClient") {
         OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor()
@@ -33,6 +34,29 @@ internal object NetworkModule {
                         }
                     },
             )
+            .build()
+    }
+
+    @Named("news")
+    @Provides
+    @Singleton
+    fun okHttpCallFactoryNews(): Call.Factory = trace("NewsOkHttpClient") {
+        OkHttpClient.Builder()
+            .addInterceptor(
+                HttpLoggingInterceptor()
+                    .apply {
+                        if (BuildConfig.DEBUG) {
+                            setLevel(HttpLoggingInterceptor.Level.BODY)
+                        }
+                    },
+            )
+            .addInterceptor { chain ->
+                val original = chain.request()
+                val requestBuilder = original.newBuilder()
+                    .header("X-Api-Key", "2a25d58a6d7b48fab781be134f4f6bb3") // Add the API key to the request header
+                val request = requestBuilder.build()
+                chain.proceed(request)
+            }
             .build()
     }
 }
