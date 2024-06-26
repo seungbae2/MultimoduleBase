@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.base.android.library)
     alias(libs.plugins.base.android.hilt)
@@ -10,7 +12,16 @@ android {
     buildFeatures {
         buildConfig = true
     }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "NEWS_API_KEY", getProperties("NEWS_API_KEY"))
+        }
+    }
 }
+
+fun getProperties(propertyKey: String): String =
+    gradleLocalProperties(rootDir, providers).getProperty(propertyKey)
 
 dependencies {
     api(projects.core.common)
