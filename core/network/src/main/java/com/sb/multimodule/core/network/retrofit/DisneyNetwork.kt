@@ -20,7 +20,7 @@ private interface DisneyNetworkApi {
     suspend fun getAllCharacters(
         @Query("page") page: Int,
         @Query("pageSize") pageSize: Int,
-    ) : ApiResponse<DisneyAllCharacterResponse>
+    ): ApiResponse<DisneyAllCharacterResponse>
 }
 
 @Singleton

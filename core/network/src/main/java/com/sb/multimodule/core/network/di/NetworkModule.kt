@@ -53,7 +53,7 @@ internal object NetworkModule {
             .addInterceptor { chain ->
                 val original = chain.request()
                 val requestBuilder = original.newBuilder()
-                    .header("X-Api-Key", "2a25d58a6d7b48fab781be134f4f6bb3") // Add the API key to the request header
+                    .header("X-Api-Key", "") // Add the API key to the request header
                 val request = requestBuilder.build()
                 chain.proceed(request)
             }

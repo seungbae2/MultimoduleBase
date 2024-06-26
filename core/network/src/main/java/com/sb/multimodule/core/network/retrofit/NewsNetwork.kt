@@ -9,12 +9,17 @@ import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
+import retrofit2.http.GET
+import retrofit2.http.Query
 import javax.inject.Inject
 import javax.inject.Named
 import javax.inject.Singleton
 
 private interface NewsNetworkApi {
-
+    @GET("top-headlines")
+    suspend fun getTopHeadlines(
+        @Query("country") country: String
+    ): ApiResponse<TopHeadlinesResponse>
 }
 
 @Singleton
@@ -33,8 +38,6 @@ internal class NewsNetwork  @Inject constructor(
         .build()
         .create(NewsNetworkApi::class.java)
 
-    override suspend fun getTopHeadlines(country: String): ApiResponse<TopHeadlinesResponse> {
-        TODO("Not yet implemented")
-    }
-
+    override suspend fun getTopHeadlines(country: String): ApiResponse<TopHeadlinesResponse> =
+        networkApi.getTopHeadlines(country)
 }
