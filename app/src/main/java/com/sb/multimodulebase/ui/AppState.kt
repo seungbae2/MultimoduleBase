@@ -11,12 +11,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import androidx.tracing.trace
 import com.sb.multimodulebase.feature.disney.navigation.DISNEY_ROUTE
 import com.sb.multimodulebase.feature.disney.navigation.navigateToDisney
 import com.sb.multimodulebase.navigation.TopLevelDestination
 import com.sb.multimodulebase.navigation.TopLevelDestination.DISNEY
+import com.sb.multimodulebase.navigation.TopLevelDestination.NEWS
 import kotlinx.coroutines.CoroutineScope
+import sb.multimodulebase.feature.news.navigation.NEWS_ROUTE
+import sb.multimodulebase.feature.news.navigation.navigateToNews
 
 @Composable
 fun rememberAppState(
@@ -49,6 +51,7 @@ class AppState(
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
             DISNEY_ROUTE -> DISNEY
+            NEWS_ROUTE -> NEWS
             else -> null
         }
 
@@ -73,6 +76,7 @@ class AppState(
 
         when (topLevelDestination) {
             DISNEY -> navController.navigateToDisney(topLevelNavOptions)
+            NEWS -> navController.navigateToNews(topLevelNavOptions)
         }
     }
 }

@@ -38,6 +38,8 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.AsyncImagePainter.State.Empty.painter
 import coil.compose.AsyncImagePainter.State.Error
 import coil.compose.AsyncImagePainter.State.Loading
 import coil.compose.rememberAsyncImagePainter
@@ -59,11 +61,12 @@ fun DynamicAsyncImage(
     var isError by remember { mutableStateOf(false) }
     val imageLoader = rememberAsyncImagePainter(
         model = imageUrl,
-        onState = { state ->
-            isLoading = state is Loading
-            isError = state is Error
-        },
     )
+
+
+    if (imageLoader.state is AsyncImagePainter.State.Success) {
+        isLoading = false
+    }
     val isLocalInspection = LocalInspectionMode.current
     Box(
         modifier = modifier,

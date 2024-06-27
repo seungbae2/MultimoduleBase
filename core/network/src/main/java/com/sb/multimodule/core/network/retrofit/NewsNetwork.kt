@@ -1,6 +1,7 @@
 package com.sb.multimodule.core.network.retrofit
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.sb.multimodule.core.network.BuildConfig
 import com.sb.multimodule.core.network.NewsNetworkDataSource
 import com.sb.multimodule.core.network.model.TopHeadlinesResponse
 import com.skydoves.sandwich.ApiResponse
@@ -18,7 +19,7 @@ import javax.inject.Singleton
 private interface NewsNetworkApi {
     @GET("top-headlines")
     suspend fun getTopHeadlines(
-        @Query("country") country: String
+        @Query("country") country: String,
     ): ApiResponse<TopHeadlinesResponse>
 }
 

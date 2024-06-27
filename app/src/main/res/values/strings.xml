@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MultimoduleBase</string>
     <string name="feature_disney">Disney</string>
+    <string name="feature_news">News</string>
 </resources>
