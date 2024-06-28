@@ -18,6 +18,7 @@ package com.sb.multimodulebase.core.designsystem.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Photo
@@ -56,36 +57,21 @@ fun DynamicAsyncImage(
     modifier: Modifier = Modifier,
     placeholder: Painter = painterResource(R.drawable.no_image),
 ) {
-    val iconTint = LocalTintTheme.current.iconTint
-    var isLoading by remember { mutableStateOf(true) }
-    var isError by remember { mutableStateOf(false) }
-    val imageLoader = rememberAsyncImagePainter(
+    val painter = rememberAsyncImagePainter(
         model = imageUrl,
+        placeholder = placeholder,
+        error = placeholder
     )
 
-
-    if (imageLoader.state is AsyncImagePainter.State.Success) {
-        isLoading = false
-    }
-    val isLocalInspection = LocalInspectionMode.current
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center,
     ) {
-        if (isLoading && !isLocalInspection) {
-            // Display a progress bar while loading
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .size(80.dp),
-                color = MaterialTheme.colorScheme.tertiary,
-            )
-        }
         Image(
-            contentScale = ContentScale.Crop,
-            painter = if (isError.not() && !isLocalInspection) imageLoader else placeholder,
+            painter = painter,
+            modifier = Modifier.fillMaxSize(),
             contentDescription = contentDescription,
-            colorFilter = if (iconTint != Unspecified) ColorFilter.tint(iconTint) else null,
+            contentScale = ContentScale.Crop
         )
     }
 }
