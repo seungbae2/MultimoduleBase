@@ -18,10 +18,9 @@ package com.sb.multimodulebase.core.designsystem.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Photo
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -31,47 +30,56 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Unspecified
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
-import coil.compose.AsyncImagePainter.State.Empty.painter
-import coil.compose.AsyncImagePainter.State.Error
-import coil.compose.AsyncImagePainter.State.Loading
 import coil.compose.rememberAsyncImagePainter
 import com.sb.multimodulebase.core.designsystem.R
-import com.sb.multimodulebase.core.designsystem.theme.LocalTintTheme
 
-/**
- * A wrapper around [AsyncImage] which determines the colorFilter based on the theme
- */
+
 @Composable
 fun DynamicAsyncImage(
     imageUrl: String,
-    contentDescription: String?,
-    modifier: Modifier = Modifier,
-    placeholder: Painter = painterResource(R.drawable.no_image),
 ) {
-    val painter = rememberAsyncImagePainter(
+    var isLoading by remember { mutableStateOf(true) }
+    var isError by remember { mutableStateOf(false) }
+    val imageLoader = rememberAsyncImagePainter(
         model = imageUrl,
-        placeholder = placeholder,
-        error = placeholder
+        onState = { state ->
+            isLoading = state is AsyncImagePainter.State.Loading
+            isError = state is AsyncImagePainter.State.Error
+        },
     )
-
+    val isLocalInspection = LocalInspectionMode.current
     Box(
-        modifier = modifier,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(180.dp),
         contentAlignment = Alignment.Center,
     ) {
+        if (isLoading) {
+            // Display a progress bar while loading
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .size(80.dp),
+                color = MaterialTheme.colorScheme.tertiary,
+            )
+        }
+
         Image(
-            painter = painter,
-            modifier = Modifier.fillMaxSize(),
-            contentDescription = contentDescription,
-            contentScale = ContentScale.Crop
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(180.dp),
+            contentScale = ContentScale.Crop,
+            painter = if (isError.not() && !isLocalInspection) {
+                imageLoader
+            } else {
+                painterResource(R.drawable.no_image)
+            },
+            contentDescription = null,
         )
     }
 }

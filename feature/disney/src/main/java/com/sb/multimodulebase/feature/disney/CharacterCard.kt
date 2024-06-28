@@ -46,8 +46,6 @@ fun CharacterCard(
         ) {
             DynamicAsyncImage(
                 imageUrl = character.imageUrl,
-                contentDescription = "",
-                placeholder = painterResource(id = designR.drawable.no_image),
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
