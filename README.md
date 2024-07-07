@@ -1,1 +1,3 @@
-Multi Module Base Project
+# Multi Module Base Project
+
+## Android App Architecture 
