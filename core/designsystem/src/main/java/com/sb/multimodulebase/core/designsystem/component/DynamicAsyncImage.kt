@@ -73,7 +73,7 @@ fun DynamicAsyncImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(180.dp),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             painter = if (isError.not() && !isLocalInspection) {
                 imageLoader
             } else {
