@@ -1,32 +1,29 @@
 package sb.multimodulebase.feature.news
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.sb.multimodulebase.core.model.Article
 
 @Composable
 internal fun NewsRoute(
     viewModel: NewsViewModel = hiltViewModel(),
 ) {
-    val newsUiState: NewsUiState by viewModel.newsUiState.collectAsStateWithLifecycle()
-    NewsScreen(newsUiState)
+    val newsArticlePagingItems: LazyPagingItems<Article> =
+        viewModel.newsArticleFlow.collectAsLazyPagingItems()
+    NewsScreen(newsArticlePagingItems)
 }
 
 @Composable
 internal fun NewsScreen(
-    newsUiState: NewsUiState
+    newsArticlePagingItems: LazyPagingItems<Article>
 ) {
     LazyColumn {
-        when (newsUiState) {
-            NewsUiState.Error -> item { Text(text = "Error") }
-            NewsUiState.Loading -> item { Text(text = "Loading") }
-            is NewsUiState.Success -> {
-                items(newsUiState.news.size) { index ->
-                    ArticleCard(newsUiState.news[index])
-                }
+        items(newsArticlePagingItems.itemCount) { index ->
+            newsArticlePagingItems[index]?.let { article ->
+                ArticleCard(article = article)
             }
         }
     }

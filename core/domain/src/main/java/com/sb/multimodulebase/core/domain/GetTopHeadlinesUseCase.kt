@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetTopHeadlinesUseCase @Inject constructor(
     private val newsRepository: NewsRepository
-){
-    suspend operator fun invoke(country: String) = newsRepository.getTopHeadlines(country = country)
+) {
+    suspend operator fun invoke() = newsRepository.getTopHeadlines()
 }

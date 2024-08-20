@@ -20,6 +20,8 @@ private interface NewsNetworkApi {
     @GET("top-headlines")
     suspend fun getTopHeadlines(
         @Query("country") country: String,
+        @Query("pageSize") pageSize: Int,
+        @Query("page") page: Int,
     ): ApiResponse<TopHeadlinesResponse>
 }
 
@@ -39,6 +41,14 @@ internal class NewsNetwork  @Inject constructor(
         .build()
         .create(NewsNetworkApi::class.java)
 
-    override suspend fun getTopHeadlines(country: String): ApiResponse<TopHeadlinesResponse> =
-        networkApi.getTopHeadlines(country)
+    override suspend fun getTopHeadlines(
+        country: String,
+        pageSize: Int,
+        page: Int
+    ): ApiResponse<TopHeadlinesResponse> =
+        networkApi.getTopHeadlines(
+            country = country,
+            pageSize = pageSize,
+            page = page
+        )
 }
