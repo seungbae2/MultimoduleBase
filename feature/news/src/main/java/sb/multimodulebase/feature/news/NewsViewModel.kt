@@ -21,6 +21,10 @@ class NewsViewModel @Inject constructor(
     val newsArticleFlow: StateFlow<PagingData<Article>> = _newsArticleFlow
 
     init {
+        getTopHeadlines()
+    }
+
+    fun getTopHeadlines() {
         viewModelScope.launch {
             getTopHeadlinesUseCase.invoke()
                 .cachedIn(viewModelScope)
