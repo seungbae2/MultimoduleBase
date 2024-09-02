@@ -25,7 +25,8 @@ import sb.multimodulebase.feature.news.util.formatToDateTimeString
 
 @Composable
 fun ArticleCard(
-    article: Article
+    article: Article,
+    onClickArticle: () -> Unit,
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -34,7 +35,9 @@ fun ArticleCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 6.dp)
-            .clickable { },
+            .clickable {
+                onClickArticle()
+            },
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.onPrimary,
         )
@@ -55,13 +58,12 @@ fun ArticleCard(
             Text(
                 text = article.title ?: "",
                 style = MaterialTheme.typography.titleSmall,
-                maxLines = 2, // Title도 길 경우 ... 처리 추가 가능
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Image or Content based on the presence of urlToImage
             article.urlToImage?.let { imageUrl ->
                 DynamicAsyncImage(
                     imageUrl = imageUrl
@@ -77,7 +79,6 @@ fun ArticleCard(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // Published date
             Text(
                 text = article.publishedAt?.formatToDateTimeString() ?: "",
                 style = MaterialTheme.typography.labelSmall,
@@ -99,7 +100,7 @@ fun ArticleCardPreviewWithImage() {
         url = "https://example.com",
         urlToImage = "https://via.placeholder.com/150"
     )
-    ArticleCard(article = article)
+    ArticleCard(article = article, onClickArticle = {})
 }
 
 @Preview(showBackground = true)
@@ -115,5 +116,5 @@ fun ArticleCardPreviewWithoutImage() {
         url = "https://example.com",
         urlToImage = null // 이미지가 없는 경우
     )
-    ArticleCard(article = article)
+    ArticleCard(article = article, onClickArticle = {})
 }

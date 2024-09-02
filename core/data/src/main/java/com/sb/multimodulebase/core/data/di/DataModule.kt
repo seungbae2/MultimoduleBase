@@ -4,6 +4,8 @@ import com.sb.multimodulebase.core.data.repository.DisneyRepository
 import com.sb.multimodulebase.core.data.repository.DisneyRepositoryImpl
 import com.sb.multimodulebase.core.data.repository.NewsRepository
 import com.sb.multimodulebase.core.data.repository.NewsRepositoryImpl
+import com.sb.multimodulebase.core.data.util.LocationBroadcastMonitor
+import com.sb.multimodulebase.core.data.util.LocationMonitor
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +24,7 @@ internal abstract class DataModule {
     abstract fun bindsNewsRepository(
         newsRepositoryImpl: NewsRepositoryImpl
     ) : NewsRepository
+
+    @Binds
+    internal abstract fun binds(impl: LocationBroadcastMonitor): LocationMonitor
 }
