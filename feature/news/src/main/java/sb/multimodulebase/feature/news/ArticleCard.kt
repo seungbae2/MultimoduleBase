@@ -20,7 +20,6 @@ import com.sb.multimodulebase.core.designsystem.component.DynamicAsyncImage
 import com.sb.multimodulebase.core.model.Article
 import com.sb.multimodulebase.core.model.Source
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import sb.multimodulebase.feature.news.util.formatToDateTimeString
 
 @Composable
@@ -51,8 +50,10 @@ fun ArticleCard(
             // Source name
             Text(
                 text = article.source.name ?: "",
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.titleMedium,
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Title
             Text(
