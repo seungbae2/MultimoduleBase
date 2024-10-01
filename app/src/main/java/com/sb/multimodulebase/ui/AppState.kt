@@ -19,6 +19,7 @@ import com.sb.multimodulebase.navigation.TopLevelDestination.NEWS
 import kotlinx.coroutines.CoroutineScope
 import sb.multimodulebase.feature.news.navigation.NEWS_ROUTE
 import sb.multimodulebase.feature.news.navigation.navigateToNews
+import sb.multimodulebase.feature.search.navigation.navigateToSearch
 
 @Composable
 fun rememberAppState(
@@ -79,4 +80,6 @@ class AppState(
             NEWS -> navController.navigateToNews(topLevelNavOptions)
         }
     }
+
+    fun navigateToSearch() = navController.navigateToSearch()
 }

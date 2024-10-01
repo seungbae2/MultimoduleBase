@@ -30,6 +30,7 @@ dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.feature.disney)
     implementation(projects.feature.news)
+    implementation(projects.feature.search)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtimeCompose)

@@ -8,12 +8,17 @@ import sb.multimodulebase.feature.search.SearchRoute
 
 const val SEARCH_ROUTE = "search"
 
-fun NavController.navigateToSearch(navOptions: NavOptions) = navigate(SEARCH_ROUTE, navOptions)
+fun NavController.navigateToSearch(navOptions: NavOptions? = null) =
+    navigate(SEARCH_ROUTE, navOptions)
 
-fun NavGraphBuilder.searchScreen() {
+fun NavGraphBuilder.searchScreen(
+    onBackClick: () -> Unit,
+) {
     composable(
         route = SEARCH_ROUTE,
     ) {
-        SearchRoute()
+        SearchRoute(
+            onBackClick = onBackClick,
+        )
     }
 }

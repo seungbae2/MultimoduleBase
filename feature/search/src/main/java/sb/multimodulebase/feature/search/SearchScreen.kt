@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 internal fun SearchRoute(
+    onBackClick: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
     SearchScreen()
