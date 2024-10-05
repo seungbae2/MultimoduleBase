@@ -1,8 +1,13 @@
 package sb.multimodulebase.feature.search
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -33,11 +38,24 @@ internal fun SearchRoute(
     onBackClick: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
-    SearchScreen()
+    SearchScreen(
+        onBackClick = onBackClick,
+    )
 }
 
 @Composable
-internal fun SearchScreen() {
+internal fun SearchScreen(
+    onBackClick: () -> Unit = {},
+) {
+    Column {
+        Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
+        SearchToolbar(
+            searchQuery = "",
+            onSearchQueryChanged = {},
+            onSearchTriggered = {},
+            onBackClick = onBackClick,
+        )
+    }
 }
 
 @Composable
@@ -86,13 +104,6 @@ private fun SearchTextField(
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
         ),
-        leadingIcon = {
-            Icon(
-                imageVector = BaseIcons.Search,
-                contentDescription = "search",
-                tint = MaterialTheme.colorScheme.onSurface,
-            )
-        },
         trailingIcon = {
             if (searchQuery.isNotEmpty()) {
                 IconButton(
@@ -113,7 +124,7 @@ private fun SearchTextField(
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(8.dp)
             .focusRequester(focusRequester)
             .onKeyEvent {
                 if (it.key == Key.Enter) {
