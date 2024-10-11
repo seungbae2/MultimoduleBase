@@ -1,8 +1,8 @@
 package com.sb.multimodule.core.network.retrofit
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.sb.multimodule.core.network.BuildConfig
 import com.sb.multimodule.core.network.NewsNetworkDataSource
+import com.sb.multimodule.core.network.model.EverythingResponse
 import com.sb.multimodule.core.network.model.TopHeadlinesResponse
 import com.skydoves.sandwich.ApiResponse
 import com.skydoves.sandwich.retrofit.adapters.ApiResponseCallAdapterFactory
@@ -23,10 +23,15 @@ private interface NewsNetworkApi {
         @Query("pageSize") pageSize: Int,
         @Query("page") page: Int,
     ): ApiResponse<TopHeadlinesResponse>
+
+    @GET("everything")
+    suspend fun getEverything(
+        @Query("q") query: String,
+    ): ApiResponse<EverythingResponse>
 }
 
 @Singleton
-internal class NewsNetwork  @Inject constructor(
+internal class NewsNetwork @Inject constructor(
     networkJson: Json,
     @Named("news") okhttpCallFactory: dagger.Lazy<Call.Factory>
 ) : NewsNetworkDataSource {
@@ -51,4 +56,7 @@ internal class NewsNetwork  @Inject constructor(
             pageSize = pageSize,
             page = page
         )
+
+    override suspend fun getEverything(query: String): ApiResponse<EverythingResponse> =
+        networkApi.getEverything(query = query)
 }

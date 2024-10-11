@@ -8,16 +8,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +34,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sb.multimodulebase.core.designsystem.icon.BaseIcons
 
 @Composable
@@ -38,23 +42,50 @@ internal fun SearchRoute(
     onBackClick: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
+    val searchResultUiState by viewModel.searchResultUiState.collectAsStateWithLifecycle()
+    val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
     SearchScreen(
+        searchQuery = searchQuery,
+        searchResultUiState = searchResultUiState,
+        onSearchQueryChanged = viewModel::onSearchQueryChanged,
         onBackClick = onBackClick,
     )
 }
 
 @Composable
 internal fun SearchScreen(
+    searchQuery: String = "",
+    searchResultUiState: SearchResultUiState = SearchResultUiState.Loading,
+    onSearchQueryChanged: (String) -> Unit = {},
     onBackClick: () -> Unit = {},
 ) {
     Column {
         Spacer(Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
         SearchToolbar(
-            searchQuery = "",
-            onSearchQueryChanged = {},
+            searchQuery = searchQuery,
+            onSearchQueryChanged = onSearchQueryChanged,
             onSearchTriggered = {},
             onBackClick = onBackClick,
         )
+    }
+    when (searchResultUiState) {
+        SearchResultUiState.Loading,
+        SearchResultUiState.LoadFailed,
+            -> Unit
+
+        is SearchResultUiState.Success -> {
+            if (searchResultUiState.isEmpty()) {
+                Text("Empty result")
+            } else {
+                LazyColumn {
+                    items(searchResultUiState.articles.size) { index ->
+                        searchResultUiState.articles[index].let { article ->
+                            article.title?.let { Text(it) }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
